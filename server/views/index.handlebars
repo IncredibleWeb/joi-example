@@ -1,13 +1,13 @@
 <main class="main container">
     <ul class="validation-errors">
         {{#each validationErrors }}
-            <li>{{this.message}}</li>
+            <li>{{{ this }}}</li>
         {{/each}}
     </ul>
     <form method="post">
-        <input type="text" name="firstname" placeholder="First Name" />
-        <input type="email" name="email" placeholder="Email" />
-        <input type="password" name="password" placeholder="Password" />
+        <input type="text" name="firstname" placeholder="First Name" value="{{ formValues.firstname }}" />
+        <input type="email" name="email" placeholder="Email" value="{{ formValues.email }}" />
+        <input type="password" name="password" placeholder="Password" value="{{ formValues.password }}" />
         <input type="submit" value="Submit" />
     </form>
     <br />
