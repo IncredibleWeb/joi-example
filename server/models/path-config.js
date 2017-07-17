@@ -10,6 +10,12 @@ export default class {
                 metaTitle: 'JOI Example',
                 title: 'JOI Example',
                 remoteScripts: ['/script.js']
+            },
+            '/success': {
+                view: 'empty',
+                metaTitle: 'Success',
+                title: 'Success',
+                remoteScripts: ['/script.js']
             }
         };
     }

@@ -1,4 +1,18 @@
 <main class="main container">
+    <ul class="validation-errors">
+        {{#each validationErrors }}
+            <li>{{this.message}}</li>
+        {{/each}}
+    </ul>
+    <form method="post">
+        <input type="text" name="firstname" placeholder="First Name" />
+        <input type="email" name="email" placeholder="Email" />
+        <input type="password" name="password" placeholder="Password" />
+        <input type="submit" value="Submit" />
+    </form>
+    <br />
+    <hr />
+    <br />
     <div class="credits">
         Example by <a href="https://www.incredible-web.com/" target="_blank">Incredible Web Ltd.</a>
     </div>
