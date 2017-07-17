@@ -7,7 +7,6 @@ import exphbs from 'express-handlebars';
 import PathConfig from './server-dist/models/path-config';
 import bodyParser from 'body-parser';
 import compression from 'compression';
-import Joi from 'joi';
 import Form from './server-dist/models/form';
 import session from 'express-session';
 
@@ -49,13 +48,16 @@ let port = process.env.port || 3000;
 // POST route for form submission
 app.post('/', (req, res) => {
     // validate the model
-    Joi.validate(req.body, Form.schema, { abortEarly: false }, (err, value) => {
-        if (err === null) {
+    let form = new Form();
+    form.validate(req.body).then((errors, values) => {
+        if (!errors) {
             res.redirect('/success');
+        } else {
+            // store errors in session
+            req.session.validationErrors = errors;
+            req.session.formValues = values;
+            res.redirect('/');
         }
-        // store errors in session
-        req.session.validationErrors = err.details;
-        res.redirect('/');
     });
 });
 
@@ -84,8 +86,10 @@ app.get('/*', function(req, res) {
 
     // load the validation errors in the view data
     pathConfigData.validationErrors = req.session.validationErrors;
+    pathConfigData.formValues = req.session.formValues;
     // clear the validation errors from the session as they have already been shown
     req.session.validationErrors = [];
+    req.session.formValues = [];
 
     // render the response
     res.render(pathConfigData.data.view, pathConfigData);
